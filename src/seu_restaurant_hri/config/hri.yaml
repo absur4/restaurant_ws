@@ -1,0 +1,10 @@
+restaurant:
+  hri:
+    speak_service_name: /restaurant/hri/speak
+    listen_service_name: /restaurant/hri/listen
+    real:
+      use_legacy_asr_service: true
+      legacy_asr_service_name: speech_recognition_service
+      legacy_wait_timeout_sec: 0.8
+      publish_realtime_topic: false
+      realtime_topic_name: /real_time_speech_recognition_topic

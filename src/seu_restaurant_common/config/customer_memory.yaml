@@ -1,0 +1,7 @@
+restaurant:
+  customer_memory:
+    memory_expire_sec: 20.0
+    duplicate_distance_thresh: 0.6
+    duplicate_time_thresh: 2.0
+    selection_policy: fifo
+    min_wave_confidence: 0.6

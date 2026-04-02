@@ -1,0 +1,69 @@
+<launch>
+  <arg name="enable_smach_viewer" default="false" />
+  <arg name="max_cycles" default="1" />
+  <arg name="use_mock_hri" default="true" />
+  <arg name="use_mock_llm" default="true" />
+  <arg name="use_mock_perception" default="true" />
+  <arg name="use_real_perception" default="false" />
+  <arg name="enable_perception_visualizer" default="true" />
+  <arg name="use_mock_manipulation" default="true" />
+  <arg name="image_topic" default="/camera/color/image_raw" />
+  <arg name="depth_topic" default="/camera/aligned_depth_to_color/image_raw" />
+  <arg name="camera_info_topic" default="/camera/color/camera_info" />
+  <arg name="camera_parent_frame" default="base_link" />
+  <arg name="camera_frame" default="camera_link" />
+  <arg name="stop_dist" default="0.75" />
+  <arg name="use_move_base_action" default="true" />
+  <arg name="move_base_action_name" default="/move_base" />
+  <arg name="goal_topic" default="/move_base_simple/goal" />
+  <arg name="goal_frame" default="map" />
+  <arg name="transform_goal_to_global_frame" default="true" />
+  <arg name="global_goal_frame" default="map" />
+  <arg name="robot_base_frame" default="base_link" />
+  <arg name="success_dist_thresh" default="0.35" />
+  <arg name="success_yaw_thresh" default="0.35" />
+  <arg name="timeout_sec" default="120.0" />
+  <arg name="poll_rate_hz" default="5.0" />
+  <arg name="named_targets_yaml" default="$(find seu_restaurant_navigation)/config/named_targets.yaml" />
+  <arg name="prefer_startup_bar_pose" default="true" />
+  <arg name="allow_configured_bar_override" default="false" />
+  <arg name="capture_startup_bar_pose" default="true" />
+  <arg name="startup_bar_target_names" default="['bar', 'bar_pose', 'bar_default']" />
+  <arg name="startup_bar_pose_timeout_sec" default="1.5" />
+
+  <include file="$(find seu_restaurant_bringup)/launch/restaurant_full.launch">
+    <arg name="enable_smach_viewer" value="$(arg enable_smach_viewer)" />
+    <arg name="max_cycles" value="$(arg max_cycles)" />
+    <arg name="use_mock_hri" value="$(arg use_mock_hri)" />
+    <arg name="use_mock_navigation" value="false" />
+    <arg name="use_mock_llm" value="$(arg use_mock_llm)" />
+    <arg name="use_mock_perception" value="$(arg use_mock_perception)" />
+    <arg name="use_real_perception" value="$(arg use_real_perception)" />
+    <arg name="enable_perception_visualizer" value="$(arg enable_perception_visualizer)" />
+    <arg name="use_mock_manipulation" value="$(arg use_mock_manipulation)" />
+    <arg name="image_topic" value="$(arg image_topic)" />
+    <arg name="depth_topic" value="$(arg depth_topic)" />
+    <arg name="camera_info_topic" value="$(arg camera_info_topic)" />
+    <arg name="camera_parent_frame" value="$(arg camera_parent_frame)" />
+    <arg name="camera_frame" value="$(arg camera_frame)" />
+    <arg name="perception_global_goal_frame" value="$(arg global_goal_frame)" />
+    <arg name="stop_dist" value="$(arg stop_dist)" />
+    <arg name="use_move_base_action" value="$(arg use_move_base_action)" />
+    <arg name="move_base_action_name" value="$(arg move_base_action_name)" />
+    <arg name="goal_topic" value="$(arg goal_topic)" />
+    <arg name="goal_frame" value="$(arg goal_frame)" />
+    <arg name="transform_goal_to_global_frame" value="$(arg transform_goal_to_global_frame)" />
+    <arg name="global_goal_frame" value="$(arg global_goal_frame)" />
+    <arg name="robot_base_frame" value="$(arg robot_base_frame)" />
+    <arg name="success_dist_thresh" value="$(arg success_dist_thresh)" />
+    <arg name="success_yaw_thresh" value="$(arg success_yaw_thresh)" />
+    <arg name="timeout_sec" value="$(arg timeout_sec)" />
+    <arg name="poll_rate_hz" value="$(arg poll_rate_hz)" />
+    <arg name="named_targets_yaml" value="$(arg named_targets_yaml)" />
+    <arg name="prefer_startup_bar_pose" value="$(arg prefer_startup_bar_pose)" />
+    <arg name="allow_configured_bar_override" value="$(arg allow_configured_bar_override)" />
+    <arg name="capture_startup_bar_pose" value="$(arg capture_startup_bar_pose)" />
+    <arg name="startup_bar_target_names" value="$(arg startup_bar_target_names)" />
+    <arg name="startup_bar_pose_timeout_sec" value="$(arg startup_bar_pose_timeout_sec)" />
+  </include>
+</launch>

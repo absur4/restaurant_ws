@@ -1,0 +1,19 @@
+# Core Restaurant task defaults that are shared across modules.
+restaurant:
+  frames:
+    map_frame: map
+    base_frame: base_link
+  topics:
+    customer_call_topic: /restaurant/customer_call
+    wave_event_topic: /restaurant/perception/wave_event
+    customer_memory_debug_topic: /restaurant/customer_memory_debug
+    order_result_topic: /restaurant/order_result
+  tables:
+    table_a:
+      display_name: Table A
+      pose_name: table_a_pose
+    table_b:
+      display_name: Table B
+      pose_name: table_b_pose
+  bar:
+    pose_name: bar_pose

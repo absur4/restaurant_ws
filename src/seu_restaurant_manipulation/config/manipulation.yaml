@@ -1,0 +1,3 @@
+acquire_action_name: /restaurant/manipulation/acquire_items
+serve_action_name: /restaurant/manipulation/serve_items
+use_mock_gripper: true

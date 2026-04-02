@@ -1,0 +1,14 @@
+restaurant:
+  navigation:
+    nav_service_name: /restaurant/navigation/nav_to_pose
+    # In no-map / weak-map scenarios, bar return defaults to startup pose capture.
+    prefer_startup_bar_pose: true
+    allow_configured_bar_override: false
+    capture_startup_bar_pose: true
+    startup_bar_target_names: [bar, bar_pose, bar_default]
+    startup_bar_pose_timeout_sec: 1.5
+    mock:
+      always_success: true
+      fail_targets: []
+      fail_first_n_calls: {}
+      default_failure_code: 100

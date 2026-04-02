@@ -1,0 +1,6 @@
+string prompt
+int32 timeout_sec
+---
+bool success
+string text
+string message

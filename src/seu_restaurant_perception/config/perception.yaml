@@ -1,0 +1,96 @@
+restaurant:
+  perception:
+    image_topic: /camera/color/image_raw
+    depth_topic: /camera/aligned_depth_to_color/image_raw
+    camera_info_topic: /camera/color/camera_info
+    camera_parent_frame: base_link
+    camera_frame: camera_link
+    global_goal_frame: map
+    wave_source_enabled: true
+    voice_call_enabled: false
+    use_mediapipe_hands: false
+    customer_call_topic: /restaurant/customer_call
+    wave_event_topic: /restaurant/perception/wave_event
+    wave_candidates_topic: /restaurant/perception/wave_candidates
+    customer_memory_debug_topic: /restaurant/customer_memory_debug
+    selection_debug_topic: /restaurant/perception/selection_debug
+    debug_image_topic: /restaurant/perception/debug_image
+    show_skeleton: true
+    show_bbox: true
+    show_wave_score: true
+    show_scores: true
+    # Draw track lifecycle state labels on each bbox.
+    show_track_state: true
+    # Draw hits / miss_count / age style lifecycle details on each bbox.
+    show_track_lifecycle: true
+    show_detector_source: true
+    show_proposal_bbox: false
+    show_memory_panel: true
+    show_queue_panel: true
+    show_selected_customer: true
+    max_memory_rows: 6
+    overlay_font_scale: 0.48
+    overlay_line_thickness: 1
+    # Keep replacement warning visible on debug image for a short time window.
+    replacement_flash_sec: 1.0
+    target_uv_topic: /restaurant/perception/target_uv
+    person_point_topic: /restaurant/perception/person_point
+    position_frame: map
+    use_depth_for_position: true
+    allow_uv_fallback: true
+    stop_dist: 0.75
+    depth_window_size: 2
+    depth_min_m: 0.35
+    depth_max_m: 6.0
+    publish_rate: 10.0
+    max_kept_customers: 2
+    min_wave_confidence: 0.6
+    min_wave_score: 0.55
+    min_consecutive_frames: 4
+    # Legacy hard timeout before a visible track becomes temporarily lost.
+    track_timeout_sec: 0.8
+    # Conservative center-distance gate for detection-to-track association.
+    track_match_distance_thresh: 0.10
+    # Minimum IoU used by the lightweight matcher when bbox overlap exists.
+    track_iou_thresh: 0.08
+    # Number of consecutive missed updates tolerated before a lost track is removed.
+    track_max_miss_count: 4
+    # Minimum matched hits required before a tentative track becomes active.
+    track_activate_hits: 3
+    # Maximum time a lost track is kept for short occlusion / short miss recovery.
+    track_lost_timeout_sec: 1.2
+    # EMA alpha for center smoothing; lower values favor stability over responsiveness.
+    center_ema_alpha: 0.32
+    # EMA alpha for wave score smoothing; lower values reduce frame-to-frame jumps.
+    score_ema_alpha: 0.28
+    # Bias added to an already kept Top-2 track to avoid unnecessary churn.
+    top2_hold_bias: 0.10
+    # Minimum adjusted-score margin required before a new candidate can replace Top-2.
+    top2_replace_margin: 0.12
+    # Base weight granted to non-active tracks during Top-2 scoring.
+    min_active_weight: 0.15
+    hand_above_shoulder_thresh: 0.04
+    lateral_wave_amplitude_thresh: 0.08
+    publish_cooldown_sec: 3.0
+    table_regions:
+      - table_id: table_a
+        u_range: [0.0, 0.5]
+        v_range: [0.0, 1.0]
+      - table_id: table_b
+        u_range: [0.5, 1.0]
+        v_range: [0.0, 1.0]
+    mock_customers:
+      - customer_id: customer_a
+        trigger_time_sec: 1.0
+        confidence: 0.92
+        position:
+          x: 1.0
+          y: 0.0
+          z: 0.0
+      - customer_id: customer_b
+        trigger_time_sec: 1.0
+        confidence: 0.88
+        position:
+          x: 2.0
+          y: 0.5
+          z: 0.0

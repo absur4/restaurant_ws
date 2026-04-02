@@ -1,0 +1,29 @@
+# State-machine-level behavior, retries, and prompt templates.
+restaurant:
+  smach:
+    service_wait_timeout_sec: 3.0
+    scan_window_sec: 2.0
+    take_order:
+      max_retries: 2
+      listen_timeout_sec: 8
+      welcome_prompt: "Welcome. What would you like to order?"
+      retry_prompt: "I did not understand the order. Please say it again."
+    report_order:
+      template: "Reporting order for {customer_id}: {items}."
+    serve_items:
+      template: "Here is your order. Please enjoy your meal."
+    alignment:
+      wave_candidates_topic: /restaurant/perception/wave_candidates
+      cmd_vel_topic: /cmd_vel
+      control_hz: 10.0
+      angular_kp: 1.8
+      max_ang_vel: 0.5
+      min_ang_vel: 0.08
+      aligned_pixel_thresh: 25.0
+      aligned_stable_cycles: 2
+      customer_timeout_sec: 8.0
+      serving_timeout_sec: 6.0
+      bar_timeout_sec: 6.0
+      bar_mode: center_person
+      allow_no_target_bypass: false
+      allow_no_target_bypass_in_mock_perception: true

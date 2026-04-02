@@ -1,0 +1,24 @@
+# 机器人几何参数 (Tracer)
+robot_radius: 0.35
+#footprint: [[0.35, 0.4], [0.35, -0.4], [-0.35, -0.4], [-0.35, 0.4]]
+
+# 障碍物相关阈值
+obstacle_range: 3.0
+raytrace_range: 4.5
+inflation_radius: 0.38  # 略大于机器人半径，确保不碰撞，但小于门宽的一半 (0.45)
+cost_scaling_factor: 5.0
+# 地图类型2
+map_type: costmap
+
+# 传感器源列表
+observation_sources: scan
+
+# 传感器具体配置
+# 重点修改：sensor_frame 改为 base_link (匹配你的mid360转换)，topic 改为 /scan
+scan: 
+   # sensor_frame: base_link
+  data_type: LaserScan
+  topic: /scan
+  marking: true
+  clearing: true
+  inf_is_valid: true  # Mid360转换后的数据可能有无穷大值，设为true表示那是空旷区域

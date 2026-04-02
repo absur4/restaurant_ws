@@ -1,0 +1,27 @@
+# Named targets used by the Restaurant navigation bridge.
+# NOTE: The coordinates below are demo defaults only.
+# Update every target position/orientation for the deployment site before running real navigation.
+# For no-map stage1, bar/bar_pose/bar_default can be overridden by startup-captured bar pose
+# when ~prefer_startup_bar_pose=true in real_navigation_node.
+restaurant:
+  navigation_targets:
+    bar:
+      frame_id: map
+      aliases: [bar_pose, bar_default]
+      position: {x: 0.0, y: 0.0, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+    customer_table_1:
+      frame_id: map
+      aliases: [table_a, table_a_pose]
+      position: {x: 1.0, y: 0.0, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+    customer_table_2:
+      frame_id: map
+      aliases: [table_b, table_b_pose]
+      position: {x: 2.0, y: 0.5, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+    waiting_area:
+      frame_id: map
+      aliases: [waiting_pose]
+      position: {x: -0.5, y: -0.5, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}

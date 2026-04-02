@@ -1,0 +1,12 @@
+# Menu vocabulary for rule-based order parsing.
+restaurant:
+  menu_items:
+    coffee:
+      display_name: Coffee
+      aliases: [coffee, coffees, americano]
+    tea:
+      display_name: Tea
+      aliases: [tea, teas, green tea, black tea]
+    sandwich:
+      display_name: Sandwich
+      aliases: [sandwich, sandwiches]

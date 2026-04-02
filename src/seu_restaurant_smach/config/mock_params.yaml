@@ -1,0 +1,7 @@
+max_cycles: 1
+mock_wait_for_customer_sec: 0.2
+mock_customer_table: table_a
+mock_order_item: coffee
+mock_order_quantity: 1
+mock_special_requests: "no sugar"
+enable_smach_viewer: false

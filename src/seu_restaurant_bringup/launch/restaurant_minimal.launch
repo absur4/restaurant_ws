@@ -1,0 +1,38 @@
+<launch>
+  <arg name="enable_smach_viewer" default="false" />
+  <arg name="max_cycles" default="1" />
+  <arg name="use_mock_hri" default="true" />
+  <arg name="use_mock_navigation" default="true" />
+  <arg name="use_mock_llm" default="true" />
+  <arg name="use_mock_perception" default="true" />
+  <arg name="use_real_perception" default="false" />
+  <arg name="enable_perception_visualizer" default="true" />
+
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/restaurant_defaults.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/customer_memory.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/menu_items.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/service_names.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/mock_dialog.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation_targets.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_smach)/config/state_machine.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_hri)/config/hri.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_llm)/config/llm.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/perception.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/wave_detector.yaml" />
+
+  <param name="enable_smach_viewer" value="$(arg enable_smach_viewer)" />
+  <param name="max_cycles" value="$(arg max_cycles)" />
+
+  <node if="$(arg use_mock_hri)" pkg="seu_restaurant_hri" type="mock_hri_node.py" name="mock_hri_node" output="screen" />
+  <node unless="$(arg use_mock_hri)" pkg="seu_restaurant_hri" type="real_hri_node.py" name="real_hri_node" output="screen" />
+  <node if="$(arg use_mock_navigation)" pkg="seu_restaurant_navigation" type="mock_navigation_node.py" name="mock_navigation_node" output="screen" />
+  <include unless="$(arg use_mock_navigation)" file="$(find seu_restaurant_navigation)/launch/real_navigation.launch" />
+  <node if="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="mock_llm_node.py" name="mock_llm_node" output="screen" />
+  <node unless="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="rule_based_parse_order_node.py" name="rule_based_parse_order_node" output="screen" />
+  <node if="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="mock_perception_node.py" name="mock_perception_node" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="mediapipe_wave_detector.py" name="mediapipe_wave_detector" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="wave_to_customer_call.py" name="wave_to_customer_call" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception') and arg('enable_perception_visualizer'))" pkg="seu_restaurant_perception" type="perception_visualizer.py" name="perception_visualizer" output="screen" />
+  <node pkg="seu_restaurant_smach" type="restaurant_smach.py" name="restaurant_smach" output="screen" />
+</launch>

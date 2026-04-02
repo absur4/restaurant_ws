@@ -1,0 +1,52 @@
+<launch>
+  <arg name="launch_camera" default="false" />
+  <arg name="use_mock_perception" default="false" />
+  <arg name="enable_visualizer" default="true" />
+  <arg name="enable_smach" default="false" />
+  <arg name="enable_image_view" default="false" />
+  <arg name="image_topic" default="/camera/color/image_raw" />
+  <arg name="use_mock_hri" default="false" />
+  <arg name="use_mock_navigation" default="false" />
+  <arg name="use_mock_llm" default="false" />
+  <arg name="use_mock_manipulation" default="false" />
+
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/restaurant_defaults.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/customer_memory.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/menu_items.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/service_names.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/mock_dialog.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation_targets.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_hri)/config/hri.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_llm)/config/llm.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_manipulation)/config/manipulation.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/perception.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/wave_detector.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_smach)/config/state_machine.yaml" />
+
+  <param name="/restaurant/perception/image_topic" value="$(arg image_topic)" />
+
+  <include if="$(arg launch_camera)" file="$(find realsense2_camera)/launch/rs_camera.launch">
+    <arg name="align_depth" value="false" />
+    <arg name="enable_color" value="true" />
+    <arg name="enable_depth" value="false" />
+  </include>
+
+  <node if="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="mock_perception_node.py" name="mock_perception_node" output="screen" />
+  <node unless="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="mediapipe_wave_detector.py" name="mediapipe_wave_detector" output="screen" />
+  <node unless="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="wave_to_customer_call.py" name="wave_to_customer_call" output="screen" />
+  <node if="$(arg enable_visualizer)" pkg="seu_restaurant_perception" type="perception_visualizer.py" name="perception_visualizer" output="screen" />
+
+  <node if="$(arg enable_smach)" pkg="seu_restaurant_smach" type="restaurant_smach.py" name="restaurant_smach" output="screen" />
+  <node if="$(eval arg('enable_smach') and arg('use_mock_hri'))" pkg="seu_restaurant_hri" type="mock_hri_node.py" name="mock_hri_node" output="screen" />
+  <node if="$(eval arg('enable_smach') and not arg('use_mock_hri'))" pkg="seu_restaurant_hri" type="real_hri_node.py" name="real_hri_node" output="screen" />
+  <node if="$(eval arg('enable_smach') and arg('use_mock_navigation'))" pkg="seu_restaurant_navigation" type="mock_navigation_node.py" name="mock_navigation_node" output="screen" />
+  <include if="$(eval arg('enable_smach') and not arg('use_mock_navigation'))" file="$(find seu_restaurant_navigation)/launch/real_navigation.launch" />
+  <node if="$(eval arg('enable_smach') and arg('use_mock_llm'))" pkg="seu_restaurant_llm" type="mock_llm_node.py" name="mock_llm_node" output="screen" />
+  <node if="$(eval arg('enable_smach') and not arg('use_mock_llm'))" pkg="seu_restaurant_llm" type="rule_based_parse_order_node.py" name="rule_based_parse_order_node" output="screen" />
+  <node if="$(eval arg('enable_smach') and arg('use_mock_manipulation'))" pkg="seu_restaurant_manipulation" type="mock_manipulation_node.py" name="mock_manipulation_node" output="screen" />
+
+  <node if="$(arg enable_image_view)" pkg="image_view" type="image_view" name="perception_debug_image_view" output="screen">
+    <remap from="image" to="/restaurant/perception/debug_image" />
+  </node>
+</launch>

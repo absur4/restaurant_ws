@@ -1,0 +1,17 @@
+# Named navigation targets for the Restaurant task.
+# NOTE: The coordinates below are demo defaults only.
+# Update every target position/orientation for the deployment site before running real navigation.
+restaurant:
+  navigation_targets:
+    table_a_pose:
+      frame_id: map
+      position: {x: 1.0, y: 0.0, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+    table_b_pose:
+      frame_id: map
+      position: {x: 2.0, y: 0.5, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}
+    bar_pose:
+      frame_id: map
+      position: {x: 0.0, y: 0.0, z: 0.0}
+      orientation: {x: 0.0, y: 0.0, z: 0.0, w: 1.0}

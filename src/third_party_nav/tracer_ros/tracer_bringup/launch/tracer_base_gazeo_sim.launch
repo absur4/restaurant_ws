@@ -1,0 +1,25 @@
+<launch>
+    <!-- 加载空世界仿真环境 -->
+    <include file="$(find tracer_gazebo_sim)/launch/tracer_empty_world.launch" />
+    
+    <!-- 加载底盘仿真节点 -->
+    <include file="$(find tracer_base)/launch/tracer_base_sim.launch" />
+
+    <!-- ********************* 新增：加载地图相关配置 ********************* -->
+    <!-- 1. 配置地图文件路径（请替换为你实际的地图文件路径） -->
+    <arg name="map_file" default="$(find tracer_nav)/maps/map.yaml" />
+    <!-- 可选：是否启动地图可视化 -->
+
+
+    <!-- 2. 启动地图服务器（核心节点：加载yaml格式的地图配置文件） -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" output="screen">
+        <param name="frame_id" value="map" /> <!-- 地图坐标系（默认map，需与导航配置一致） -->
+    </node>
+
+    <!-- 3. 启动地图可视化节点（可选，方便在RViz中查看地图） -->
+
+
+    <!-- 4. 可选：启动静态坐标变换（map -> odom，若仿真环境未自动提供） -->
+
+
+</launch>

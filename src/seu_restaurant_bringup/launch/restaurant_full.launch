@@ -1,0 +1,93 @@
+<launch>
+  <arg name="enable_smach_viewer" default="false" />
+  <arg name="max_cycles" default="1" />
+  <arg name="use_mock_hri" default="true" />
+  <arg name="use_mock_navigation" default="true" />
+  <arg name="use_mock_llm" default="true" />
+  <arg name="use_mock_perception" default="true" />
+  <arg name="use_real_perception" default="false" />
+  <arg name="enable_perception_visualizer" default="true" />
+  <arg name="use_mock_manipulation" default="true" />
+  <arg name="image_topic" default="/camera/color/image_raw" />
+  <arg name="depth_topic" default="/camera/aligned_depth_to_color/image_raw" />
+  <arg name="camera_info_topic" default="/camera/color/camera_info" />
+  <arg name="camera_parent_frame" default="base_link" />
+  <arg name="camera_frame" default="camera_link" />
+  <arg name="perception_global_goal_frame" default="map" />
+  <arg name="stop_dist" default="0.75" />
+
+  <arg name="use_move_base_action" default="true" />
+  <arg name="move_base_action_name" default="/move_base" />
+  <arg name="goal_topic" default="/move_base_simple/goal" />
+  <arg name="goal_frame" default="map" />
+  <arg name="transform_goal_to_global_frame" default="true" />
+  <arg name="global_goal_frame" default="map" />
+  <arg name="robot_base_frame" default="base_link" />
+  <arg name="success_dist_thresh" default="0.35" />
+  <arg name="success_yaw_thresh" default="0.35" />
+  <arg name="timeout_sec" default="120.0" />
+  <arg name="poll_rate_hz" default="5.0" />
+  <arg name="named_targets_yaml" default="$(find seu_restaurant_navigation)/config/named_targets.yaml" />
+  <arg name="prefer_startup_bar_pose" default="true" />
+  <arg name="allow_configured_bar_override" default="false" />
+  <arg name="capture_startup_bar_pose" default="true" />
+  <arg name="startup_bar_target_names" default="['bar', 'bar_pose', 'bar_default']" />
+  <arg name="startup_bar_pose_timeout_sec" default="1.5" />
+
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/restaurant_defaults.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/customer_memory.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/menu_items.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/service_names.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_common)/config/mock_dialog.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation_targets.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_smach)/config/state_machine.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_hri)/config/hri.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_llm)/config/llm.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_manipulation)/config/manipulation.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/perception.yaml" />
+  <rosparam command="load" file="$(find seu_restaurant_perception)/config/wave_detector.yaml" />
+
+  <param name="enable_smach_viewer" value="$(arg enable_smach_viewer)" />
+  <param name="max_cycles" value="$(arg max_cycles)" />
+  <param name="/restaurant/perception/image_topic" value="$(arg image_topic)" />
+  <param name="/restaurant/perception/depth_topic" value="$(arg depth_topic)" />
+  <param name="/restaurant/perception/camera_info_topic" value="$(arg camera_info_topic)" />
+  <param name="/restaurant/perception/camera_parent_frame" value="$(arg camera_parent_frame)" />
+  <param name="/restaurant/perception/camera_frame" value="$(arg camera_frame)" />
+  <param name="/restaurant/perception/position_frame" value="$(arg perception_global_goal_frame)" />
+  <param name="/restaurant/perception/global_goal_frame" value="$(arg perception_global_goal_frame)" />
+  <param name="/restaurant/perception/stop_dist" value="$(arg stop_dist)" />
+  <param name="/restaurant/perception/use_mock_perception" value="$(arg use_mock_perception)" />
+
+  <node if="$(arg use_mock_hri)" pkg="seu_restaurant_hri" type="mock_hri_node.py" name="mock_hri_node" output="screen" />
+  <node unless="$(arg use_mock_hri)" pkg="seu_restaurant_hri" type="real_hri_node.py" name="real_hri_node" output="screen" />
+  <node if="$(arg use_mock_navigation)" pkg="seu_restaurant_navigation" type="mock_navigation_node.py" name="mock_navigation_node" output="screen" />
+  <include unless="$(arg use_mock_navigation)" file="$(find seu_restaurant_navigation)/launch/real_navigation.launch">
+    <arg name="use_move_base_action" value="$(arg use_move_base_action)" />
+    <arg name="move_base_action_name" value="$(arg move_base_action_name)" />
+    <arg name="goal_topic" value="$(arg goal_topic)" />
+    <arg name="goal_frame" value="$(arg goal_frame)" />
+    <arg name="transform_goal_to_global_frame" value="$(arg transform_goal_to_global_frame)" />
+    <arg name="global_goal_frame" value="$(arg global_goal_frame)" />
+    <arg name="robot_base_frame" value="$(arg robot_base_frame)" />
+    <arg name="success_dist_thresh" value="$(arg success_dist_thresh)" />
+    <arg name="success_yaw_thresh" value="$(arg success_yaw_thresh)" />
+    <arg name="timeout_sec" value="$(arg timeout_sec)" />
+    <arg name="poll_rate_hz" value="$(arg poll_rate_hz)" />
+    <arg name="named_targets_yaml" value="$(arg named_targets_yaml)" />
+    <arg name="prefer_startup_bar_pose" value="$(arg prefer_startup_bar_pose)" />
+    <arg name="allow_configured_bar_override" value="$(arg allow_configured_bar_override)" />
+    <arg name="capture_startup_bar_pose" value="$(arg capture_startup_bar_pose)" />
+    <arg name="startup_bar_target_names" value="$(arg startup_bar_target_names)" />
+    <arg name="startup_bar_pose_timeout_sec" value="$(arg startup_bar_pose_timeout_sec)" />
+  </include>
+  <node if="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="mock_llm_node.py" name="mock_llm_node" output="screen" />
+  <node unless="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="rule_based_parse_order_node.py" name="rule_based_parse_order_node" output="screen" />
+  <node if="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="mock_perception_node.py" name="mock_perception_node" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="mediapipe_wave_detector.py" name="mediapipe_wave_detector" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="wave_to_customer_call.py" name="wave_to_customer_call" output="screen" />
+  <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception') and arg('enable_perception_visualizer'))" pkg="seu_restaurant_perception" type="perception_visualizer.py" name="perception_visualizer" output="screen" />
+  <node if="$(arg use_mock_manipulation)" pkg="seu_restaurant_manipulation" type="mock_manipulation_node.py" name="mock_manipulation_node" output="screen" />
+  <node pkg="seu_restaurant_smach" type="restaurant_smach.py" name="restaurant_smach" output="screen" />
+</launch>

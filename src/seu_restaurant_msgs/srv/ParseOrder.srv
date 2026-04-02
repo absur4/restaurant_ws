@@ -1,0 +1,5 @@
+string raw_text
+---
+bool success
+seu_restaurant_msgs/OrderInfo order
+string message

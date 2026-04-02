@@ -1,0 +1,42 @@
+<launch>
+  <arg name="use_move_base_action" default="true" />
+  <arg name="move_base_action_name" default="/move_base" />
+  <arg name="goal_topic" default="/move_base_simple/goal" />
+  <arg name="goal_frame" default="map" />
+  <arg name="transform_goal_to_global_frame" default="true" />
+  <arg name="global_goal_frame" default="map" />
+  <arg name="robot_base_frame" default="base_link" />
+  <arg name="success_dist_thresh" default="0.35" />
+  <arg name="success_yaw_thresh" default="0.35" />
+  <arg name="timeout_sec" default="120.0" />
+  <arg name="poll_rate_hz" default="5.0" />
+  <arg name="named_targets_yaml" default="$(find seu_restaurant_navigation)/config/named_targets.yaml" />
+  <arg name="prefer_startup_bar_pose" default="true" />
+  <arg name="allow_configured_bar_override" default="false" />
+  <arg name="capture_startup_bar_pose" default="true" />
+  <arg name="startup_bar_target_names" default="['bar', 'bar_pose', 'bar_default']" />
+  <arg name="startup_bar_pose_timeout_sec" default="1.5" />
+
+  <rosparam command="load" file="$(find seu_restaurant_navigation)/config/navigation.yaml" />
+  <rosparam command="load" file="$(arg named_targets_yaml)" />
+
+  <node pkg="seu_restaurant_navigation" type="real_navigation_node.py" name="real_navigation_node" output="screen">
+    <param name="use_move_base_action" value="$(arg use_move_base_action)" />
+    <param name="move_base_action_name" value="$(arg move_base_action_name)" />
+    <param name="goal_topic" value="$(arg goal_topic)" />
+    <param name="goal_frame" value="$(arg goal_frame)" />
+    <param name="transform_goal_to_global_frame" value="$(arg transform_goal_to_global_frame)" />
+    <param name="global_goal_frame" value="$(arg global_goal_frame)" />
+    <param name="robot_base_frame" value="$(arg robot_base_frame)" />
+    <param name="success_dist_thresh" value="$(arg success_dist_thresh)" />
+    <param name="success_yaw_thresh" value="$(arg success_yaw_thresh)" />
+    <param name="timeout_sec" value="$(arg timeout_sec)" />
+    <param name="poll_rate_hz" value="$(arg poll_rate_hz)" />
+    <param name="named_targets_yaml" value="$(arg named_targets_yaml)" />
+    <rosparam param="startup_bar_target_names">$(arg startup_bar_target_names)</rosparam>
+    <param name="prefer_startup_bar_pose" value="$(arg prefer_startup_bar_pose)" />
+    <param name="allow_configured_bar_override" value="$(arg allow_configured_bar_override)" />
+    <param name="capture_startup_bar_pose" value="$(arg capture_startup_bar_pose)" />
+    <param name="startup_bar_pose_timeout_sec" value="$(arg startup_bar_pose_timeout_sec)" />
+  </node>
+</launch>

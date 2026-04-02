@@ -1,0 +1,14 @@
+# Mock dialog behavior for the HRI test node.
+restaurant:
+  hri:
+    mock:
+      timeout_sec: 8
+      retry_count: 2
+      default_text: one coffee and one sandwich
+      prompt_rules:
+        - contains: [welcome, order]
+          response: one coffee and two teas
+        - contains: [anything else]
+          response: no thank you
+        - contains: [serve, delivery]
+          response: thank you

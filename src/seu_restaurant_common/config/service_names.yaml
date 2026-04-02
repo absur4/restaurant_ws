@@ -1,0 +1,10 @@
+# Default service endpoints. Replace these names when real nodes are integrated.
+restaurant:
+  services:
+    hri:
+      speak: /restaurant/hri/speak
+      listen: /restaurant/hri/listen
+    navigation:
+      nav_to_pose: /restaurant/navigation/nav_to_pose
+    llm:
+      parse_order: /restaurant/llm/parse_order

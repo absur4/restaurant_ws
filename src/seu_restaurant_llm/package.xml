@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>seu_restaurant_llm</name>
+  <version>0.1.0</version>
+  <description>LLM planning and order parsing interfaces for the SEU Restaurant task.</description>
+  <maintainer email="htzhou@todo.todo">htzhou</maintainer>
+  <license>MIT</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>seu_restaurant_common</build_depend>
+  <build_depend>seu_restaurant_msgs</build_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>seu_restaurant_common</exec_depend>
+  <exec_depend>seu_restaurant_msgs</exec_depend>
+</package>

@@ -1,0 +1,37 @@
+restaurant:
+  perception:
+    wave_detector:
+      detector_backend: yolo26_mediapipe
+      detector_mode: person_crop_pose
+      enable_detector_fallback: true
+      max_num_poses: 4
+      max_person_detections: 4
+      history_size: 12
+      yolo_model: yolo26n.pt
+      yolo_conf: 0.35
+      yolo_imgsz: 640
+      yolo_device: cpu
+      # Legacy fallback for center-only matcher; kept for backward compatibility.
+      track_match_distance_norm: 0.12
+      person_detector_stride: 8.0
+      person_detector_padding: 16.0
+      person_detector_scale: 1.05
+      person_detector_hit_threshold: 0.0
+      person_detector_score_thresh: 0.0
+      person_detector_nms_thresh: 0.45
+      crop_expand_ratio: 0.18
+      crop_min_size_px: 96
+      crop_pose_min_visibility: 0.2
+      pose_reject_min_shoulder_width: 0.03
+      pose_duplicate_iou_thresh: 0.65
+      pose_duplicate_center_thresh: 0.06
+      min_pose_detection_confidence: 0.5
+      min_pose_presence_confidence: 0.5
+      min_tracking_confidence: 0.5
+      wave_window_sec: 1.0
+      min_raise_frames: 4
+      min_wave_flips: 2
+      min_wave_amplitude_norm: 0.18
+      wave_event_threshold: 0.65
+      wave_cooldown_sec: 1.2
+      pose_landmarker_model_path: ""
