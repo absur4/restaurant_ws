@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="seu_speech_recognition" name="speech_recognition_service" type="speech_service.py"
+          output="screen" respawn="true" />
+</launch>

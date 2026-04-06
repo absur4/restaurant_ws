@@ -29,7 +29,7 @@
   <node if="$(arg use_mock_navigation)" pkg="seu_restaurant_navigation" type="mock_navigation_node.py" name="mock_navigation_node" output="screen" />
   <include unless="$(arg use_mock_navigation)" file="$(find seu_restaurant_navigation)/launch/real_navigation.launch" />
   <node if="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="mock_llm_node.py" name="mock_llm_node" output="screen" />
-  <node unless="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="rule_based_parse_order_node.py" name="rule_based_parse_order_node" output="screen" />
+  <node unless="$(arg use_mock_llm)" pkg="seu_restaurant_llm" type="llm_fallback_parse_order_node.py" name="llm_fallback_parse_order_node" output="screen" />
   <node if="$(arg use_mock_perception)" pkg="seu_restaurant_perception" type="mock_perception_node.py" name="mock_perception_node" output="screen" />
   <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="mediapipe_wave_detector.py" name="mediapipe_wave_detector" output="screen" />
   <node if="$(eval arg('use_real_perception') and not arg('use_mock_perception'))" pkg="seu_restaurant_perception" type="wave_to_customer_call.py" name="wave_to_customer_call" output="screen" />

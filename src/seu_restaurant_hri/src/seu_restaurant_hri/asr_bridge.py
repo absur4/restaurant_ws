@@ -27,6 +27,9 @@ class LegacyASRBridge:
         self.use_legacy_asr_service = bool(
             rospy.get_param("~use_legacy_asr_service", real_cfg.get("use_legacy_asr_service", True))
         )
+        self.allow_mock_fallback = bool(
+            rospy.get_param("~allow_mock_fallback", real_cfg.get("allow_mock_fallback", False))
+        )
         self.legacy_asr_service_name = rospy.get_param(
             "~legacy_asr_service_name", real_cfg.get("legacy_asr_service_name", "speech_recognition_service")
         )
@@ -52,6 +55,11 @@ class LegacyASRBridge:
             self._publish_if_needed(text)
             return True, text, message
 
+        if not self.allow_mock_fallback:
+            if message:
+                return False, "", message
+            return False, "", "real ASR returned no valid text and mock fallback is disabled"
+
         text = self._resolve_text(prompt)
         if not text:
             if message:
@@ -67,7 +75,7 @@ class LegacyASRBridge:
         if not self.use_legacy_asr_service:
             return "", ""
         if not _HAS_LEGACY_ASR_SRV:
-            return "", "legacy ASR srv type not importable; fallback to mock text"
+            return "", "legacy ASR srv type not importable"
         try:
             if self._legacy_proxy is None:
                 wait_timeout = min(float(timeout_sec), self.legacy_wait_timeout_sec)

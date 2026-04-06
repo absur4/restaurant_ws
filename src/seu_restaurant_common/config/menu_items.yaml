@@ -3,10 +3,31 @@ restaurant:
   menu_items:
     coffee:
       display_name: Coffee
-      aliases: [coffee, coffees, americano]
+      aliases: [coffee, coffees, americano, 咖啡]
+    cola:
+      display_name: Cola
+      aliases: [cola, colas, coke, cokes, 可乐]
+    water:
+      display_name: Water
+      aliases: [water, waters, mineral water, bottled water, 矿泉水, 水]
     tea:
       display_name: Tea
-      aliases: [tea, teas, green tea, black tea]
+      aliases: [tea, teas, green tea, black tea, 茶]
+    milk:
+      display_name: Milk
+      aliases: [milk, milks, 牛奶]
+    juice:
+      display_name: Juice
+      aliases: [juice, juices, 果汁]
+    noodles:
+      display_name: Noodles
+      aliases: [noodles, noodle, 面条]
+    chips:
+      display_name: Chips
+      aliases: [chips, chip, fries, 薯片]
     sandwich:
       display_name: Sandwich
-      aliases: [sandwich, sandwiches]
+      aliases: [sandwich, sandwiches, 三明治]
+    hamburger:
+      display_name: Hamburger
+      aliases: [hamburger, hamburgers, burger, burgers, 汉堡]

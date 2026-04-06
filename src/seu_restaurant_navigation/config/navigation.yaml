@@ -7,6 +7,7 @@ restaurant:
     capture_startup_bar_pose: true
     startup_bar_target_names: [bar, bar_pose, bar_default]
     startup_bar_pose_timeout_sec: 1.5
+    startup_bar_yaw_offset: 0.0
     mock:
       always_success: true
       fail_targets: []

@@ -4,7 +4,23 @@ restaurant:
     listen_service_name: /restaurant/hri/listen
     real:
       use_legacy_asr_service: true
+      allow_mock_fallback: false
       legacy_asr_service_name: speech_recognition_service
       legacy_wait_timeout_sec: 0.8
+      asr_backend: whisper
+      whisper_model_path: /home/songfei/restaurant_ws/src/seu_speech_recognition/scripts/base.pt
+      whisper_device: cpu
+      asr_language: english
+      asr_listen_timeout_sec: 5.0
+      asr_phrase_time_limit_sec: 6.0
+      asr_ambient_duration_sec: 0.5
+      asr_device_index: -1
+      asr_sample_rate: 16000
+      dynamic_energy_threshold: true
+      energy_threshold: 300
+      pause_threshold: 0.8
+      non_speaking_duration: 0.5
+      use_task_as_initial_prompt: false
+      google_language: en-US
       publish_realtime_topic: false
       realtime_topic_name: /real_time_speech_recognition_topic

@@ -1,3 +1,12 @@
 restaurant:
   llm:
     parse_order_service_name: /restaurant/llm/parse_order
+    enable_llm: true
+    provider: openai_compatible
+    model: gpt-4o-mini
+    timeout_sec: 20.0
+    temperature: 0.0
+    max_completion_tokens: 300
+    base_url: "https://qianfan.baidubce.com/v2/chat/completions"
+    api_key: "bce-v3/ALTAK-3ZLl2dtdGAJLPgGpMUYgl/50639db35180f99199f68f7520cc8f7baf860ee7"
+    api_key_envs: [BAIDU_QIANFAN_API_KEY, CLIPROXY_API_KEY, OPENAI_API_KEY]

@@ -1,6 +1,27 @@
 import threading
+import os
+import sys
 
 import rospy
+
+
+def _append_conda_site_packages():
+    version_tag = "python{}.{}".format(sys.version_info[0], sys.version_info[1])
+    candidates = []
+
+    conda_prefix = os.environ.get("CONDA_PREFIX", "").strip()
+    if conda_prefix:
+        candidates.append(os.path.join(conda_prefix, "lib", version_tag, "site-packages"))
+
+    home_dir = os.path.expanduser("~")
+    candidates.append(os.path.join(home_dir, "miniconda3", "envs", "shibie", "lib", version_tag, "site-packages"))
+
+    for candidate in candidates:
+        if os.path.isdir(candidate) and candidate not in sys.path:
+            sys.path.insert(0, candidate)
+
+
+_append_conda_site_packages()
 
 try:
     import pyttsx3  # type: ignore

@@ -14,6 +14,7 @@ catkin_package(
 include_directories(${catkin_INCLUDE_DIRS})
 
 install(PROGRAMS
+  scripts/llm_fallback_parse_order_node.py
   scripts/mock_llm_node.py
   scripts/rule_based_parse_order_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

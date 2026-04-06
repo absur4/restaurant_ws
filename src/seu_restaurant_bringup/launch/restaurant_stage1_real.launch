@@ -57,6 +57,7 @@
   <arg name="capture_startup_bar_pose" default="true" />
   <arg name="startup_bar_target_names" default="['bar', 'bar_pose', 'bar_default']" />
   <arg name="startup_bar_pose_timeout_sec" default="1.5" />
+  <arg name="startup_bar_yaw_offset" default="3.141592653589793" />
 
   <include file="$(find seu_restaurant_bringup)/launch/restaurant_full.launch">
     <arg name="enable_smach_viewer" value="$(arg enable_smach_viewer)" />
@@ -94,5 +95,6 @@
     <arg name="capture_startup_bar_pose" value="$(arg capture_startup_bar_pose)" />
     <arg name="startup_bar_target_names" value="$(arg startup_bar_target_names)" />
     <arg name="startup_bar_pose_timeout_sec" value="$(arg startup_bar_pose_timeout_sec)" />
+    <arg name="startup_bar_yaw_offset" value="$(arg startup_bar_yaw_offset)" />
   </include>
 </launch>
